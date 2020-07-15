@@ -20,8 +20,16 @@ class App extends Component {
             <li>Add a 404 error page and render it for any unknown routes</li>
             <li>Redirect requests to /all-courses to /courses (=> Your "Courses" page)</li>
           </ol>
+
+          {/* navigation links */}
+          <NavLink to="/">Main</NavLink> &nbsp;
+          <NavLink to="/courses">Courses</NavLink> &nbsp;
+          <NavLink to="/users">Users</NavLink>
+
+          {/* routes to each component  */}
           <Route path="/courses" component={Courses}/>              
-          <Route path="/users" component={Users}/>    
+          <Route path="/users" component={Users}/> 
+             
         </div>
       </BrowserRouter>
     );
