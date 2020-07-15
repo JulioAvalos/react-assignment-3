@@ -1,54 +1,35 @@
 import React, { Component } from 'react';
 
 class Course extends Component {
-
     state = {
-        loadedCourse: null
+        courseTitle: ''
     }
-
+    
     componentDidMount () {
+        this.parseQueryParams();
+    }
+
+    componentDidUpdate() {
+        this.parseQueryParams();
+    }
+
+    parseQueryParams () {
         console.log(this.props);
-        this.loadData();
-    }
-
-    componentDidUpdate () {
-        this.loadData();
-    }
-
-    loadData () {
-        if(this.props.match.params.id) {
-            console.log('initial -> ', this.props);
-            if(!this.state.loadedCourse) {
-                const titleName = decodeURIComponent(this.props.location.search).replace('?courseName=', '');
-                this.setState({
-                    loadedCourse: {
-                        id: +this.props.match.params.id,
-                        title: titleName
-                    }
-                });
-            } else if( this.state.loadedCourse.id !== +this.props.match.params.id){
-                const titleName = decodeURIComponent(this.props.location.search).replace('?courseName=', '');
-                this.setState({
-                    loadedCourse: {
-                        id: +this.props.match.params.id,
-                        title: titleName
-                    }
-                });
+        const query = new URLSearchParams(this.props.location.search);
+        for (let param of query.entries()) {
+            if (this.state.courseTitle !== param[1]) {
+                this.setState({courseTitle: param[1]});
             }
         }
     }
 
     render () {
-        let course = <h1>Please choose a course!</h1>;
-        if(this.state.loadedCourse) {
-            course = (
-                <div>
-                    <h1>{this.state.loadedCourse.title}</h1>
-                    <p>You selected the Course with ID: {this.state.loadedCourse.id}</p>
-                </div>
-            );
-        }
-        return course;
+        return (
+            <div>
+                <h1>{this.state.courseTitle}</h1>
+                <p>You selected the Course with ID: {this.props.match.params.courseId}</p>
+            </div>
+        );
     }
 }
 
