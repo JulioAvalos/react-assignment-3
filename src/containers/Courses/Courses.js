@@ -14,8 +14,12 @@ class Courses extends Component {
         ]
     }
 
-    courseSelectedHandle = (id) => {
-        this.props.history.push('/courses/' + id);
+    courseSelectedHandle = (id, title) => {
+        const location = {
+            pathname: '/courses/' + id,
+            search: 'courseName=' + title
+        }
+        this.props.history.push(location);
     }
 
     render () {
@@ -25,7 +29,7 @@ class Courses extends Component {
                 <section className="Courses">
                     {
                         this.state.courses.map( course => {
-                            return <article className="Course" key={course.id} onClick={() => this.courseSelectedHandle(course.id)}>{course.title}</article>;
+                            return <article className="Course" key={course.id} onClick={() => this.courseSelectedHandle(course.id, course.title)}>{course.title}</article>;
                         } )
                     }
                 </section>

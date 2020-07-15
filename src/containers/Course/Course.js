@@ -17,14 +17,23 @@ class Course extends Component {
 
     loadData () {
         if(this.props.match.params.id) {
-            // console.log('initial -> ', this.props.match.params.id);
+            console.log('initial -> ', this.props);
             if(!this.state.loadedCourse) {
-                console.log('changing course 1-> ', this.props.match.params.id);
-                this.setState({loadedCourse: {id: +this.props.match.params.id}});
+                const titleName = decodeURIComponent(this.props.location.search).replace('?courseName=', '');
+                this.setState({
+                    loadedCourse: {
+                        id: +this.props.match.params.id,
+                        title: titleName
+                    }
+                });
             } else if( this.state.loadedCourse.id !== +this.props.match.params.id){
-                // console.log('changing course 2 -> ', this.props.match.params.id);
-                this.setState({loadedCourse: {id: +this.props.match.params.id}});
-                // this.props.history.push('/courses/' + this.props.match.params.id);
+                const titleName = decodeURIComponent(this.props.location.search).replace('?courseName=', '');
+                this.setState({
+                    loadedCourse: {
+                        id: +this.props.match.params.id,
+                        title: titleName
+                    }
+                });
             }
         }
     }
@@ -34,7 +43,7 @@ class Course extends Component {
         if(this.state.loadedCourse) {
             course = (
                 <div>
-                    <h1>_COURSE_TITLE_</h1>
+                    <h1>{this.state.loadedCourse.title}</h1>
                     <p>You selected the Course with ID: {this.state.loadedCourse.id}</p>
                 </div>
             );
